@@ -1,0 +1,38 @@
+@charset "UTF-8";
+table,th,td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 10px;
+}
+/* 
+input[type="text"] {
+	width: 100%;
+}
+ */
+ 
+textarea{
+	width: 550px;
+	height: 200px;
+	resize: none;
+}
+
+button{
+	margin: 5px 2px;
+}
+
+.inline{
+	display: inline;
+}
+
+div.search_layer li{
+	list-style-type: none;
+	margin-left: -40px;
+	margin-top: 3px;
+}
+
+
+
+
+
+
+

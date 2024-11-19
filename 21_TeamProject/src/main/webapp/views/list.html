@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+	table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 10px;
+	}
+	
+	input[type="text"]{
+		background-color : lightgray;
+	}
+</style>
+</head>
+<body>
+	<h3>조별명단 및 프로젝트</h3>
+	<hr>
+	<table>
+		<thead>
+			<tr>
+				<th>no</th>
+				<th>팀이름</th>
+				<th>팀장</th>
+				<th>팀원1</th>
+				<th>팀원2</th>
+				<th>팀원3</th>
+				<th>팀원4</th>
+				<th>프로젝트 주제</th>
+			</tr>
+		</thead>
+		<tbody id ="list">
+						
+		</tbody>
+	</table>
+</body>
+<script>
+	listCall();
+
+	function listCall(){
+		$.ajax({
+			type:'GET',
+			url:'list.ajax',
+			data:{},
+			dataType:'JSON',
+			success: function(data){
+				console.log(data);
+				console.log(data.list);
+				printList(data.list);
+				
+			},
+			error: function(e){
+				console.log(e);
+			}		
+		});
+	}
+	
+	function printList(list){
+		var content = '';
+		
+		console.log('$(list) : {}', $(list));
+		console.log('list : {}', list);
+		
+		$(list).each(function(index, item){
+			console.log('item : {}', item);
+			content += '<tr>';
+			for(var key in item){
+				if(key == 'no'){
+					content += '<td id="no">' + item[key] + '</td>'; 
+				}else{
+					content += '<td><input type="text" name=\"' + key + '\" value=\"' + item[key] + '\"  /></td>';
+				}
+			}
+			content += '</tr>';
+		})
+		
+		$('#list').html(content);
+		
+		$('input[type="text"]').focusin(function(e){
+			$(this).css({'background-color':'white'});
+		});
+		
+		$('input[type="text"]').focusout(function(e){
+			$(this).css({'background-color':'lightgray'});
+			// 변경된 값이 있으면 console.log('요청!')
+			// 람다식을 사용한 경우 this를 못쓰기때문에 e.currentTarget()을 사용한다.
+			// $(this) == e.currentTarget()
+			// console.log(e);
+			if(e.currentTarget.defaultValue != e.currentTarget.value){
+				console.log(e.currentTarget);
+				console.log('수정요청!');
+				// 컬럼명, 해당값, 번호
+				console.log('no: ', $(this).closest('tr').find('#no').text());
+				var col = $(this).attr('name');
+				var val = $(this).val();
+				var no = $(this).closest('tr').find('#no').text(); 
+				
+				console.log('column: ' + col);
+				console.log('value: ' + val);
+				console.log('no: ' + no);
+				
+				location.href = 'update/' + col + '/' + val + '/' + no + '.ajax';	
+				
+				
+			}
+		});
+	}
+	
+</script>
+</html>
+
+
+
+
+
+
+
+
+

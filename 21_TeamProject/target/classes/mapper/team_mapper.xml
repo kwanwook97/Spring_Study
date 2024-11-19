@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="kr.co.gudi.mapper.TeamMapper">
+
+	<select id="list" resultType="kr.co.gudi.dto.TeamDTO">
+		SELECT * FROM team_project ORDER BY no DESC
+	</select>
+	
+	<update id="update" parameterType="map">
+		UPDATE team_project
+		<set>
+			<if test="col.equals('team_name') and col != null">
+				team_name = #{val},
+			</if>
+			<if test="col.equals('leader') and col != null">
+				leader = #{val},
+			</if>
+			<if test="col.equals('staff1') and col != null">
+				staff1 = #{val},
+			</if>
+			<if test="col.equals('staff2') and col != null">
+				staff2 = #{val},
+			</if>
+			<if test="col.equals('staff3') and col != null">
+				staff3 = #{val},
+			</if>
+			<if test="col.equals('staff4') and col != null">
+				staff4 = #{val},
+			</if>
+			<if test="col.equals('project_name') and col != null">
+				project_name = #{val},
+			</if>
+			
+			<!-- 들어온 값이 NULL값일 때 -->
+			<if test="col.equals('team_name') and col = null and val.equals('')">
+				team_name = '',
+			</if>
+			<if test="col.equals('leader') and col = null and val.equals('')">
+				leader = '',
+			</if>
+			<if test="col.equals('staff1') and col = null and val.equals('')">
+				staff1 = '',
+			</if>
+			<if test="col.equals('staff2') and col = null and val.equals('')">
+				staff2 = '',
+			</if>
+			<if test="col.equals('staff3') and col = null and val.equals('')">
+				staff3 = '',
+			</if>
+			<if test="col.equals('staff4') and col = null and val.equals('')">
+				staff4 = '',
+			</if>
+			<if test="col.equals('project_name') and col = null and val.equals('')">
+				project_name = '',
+			</if>
+		</set>
+		WHERE no = #{no}
+	</update>
+
+	
+</mapper>   
